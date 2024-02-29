@@ -46,10 +46,27 @@ vim.wo.foldminlines = 1
 
 vim.opt.background = "dark"
 
+vim.filetype.add({ extensions = {sls = "yaml", yml = "yaml"}})
+
+local augroup = vim.api.nvim_create_augroup
+local autocmd = vim.api.nvim_create_autocmd
+local AWPGroup = augroup('AWP', {})
+local yank_group = augroup("HighlightYank", {})
+
+autocmd("TextYankPost", {
+  group = yank_group,
+  pattern = "*",
+  callback = function()
+    vim.highlight.on_yank({
+      higroup = "IncSearch",
+      timeout = 40,
+    })
+  end,
+})
+--
 -- Strip trailing spaces on save - finally shared with the world by TSV
-vim.api.nvim_create_autocmd({"BufWritePre"}, {
+autocmd({"BufWritePre"}, {
+  group = AWPGroup,
   pattern = { "*" },
   command = [[%s/\s\+$//e]],
 })
-
-vim.filetype.add({ extensions = {sls = "yaml", yml = "yaml"}})
