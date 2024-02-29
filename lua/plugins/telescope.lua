@@ -1,4 +1,5 @@
 return {
+  {
 	  'nvim-telescope/telescope.nvim',
 	  dependencies = { 'nvim-lua/plenary.nvim'},
     config = function()
@@ -21,22 +22,22 @@ return {
       vim.keymap.set('n', '<leader>rh',
         function() telescope.find_files({ search_dirs = { "app/helpers" } }) end,
         { desc = "Open Rails Helpers" })
-      vim.keymap.set('n', '<leader>oo',
+      vim.keymap.set('n', '<leader>ro',
         function() telescope.oldfiles({ cwd_only = true }) end,
         { desc = "Open Old Files" })
       vim.keymap.set('n', '<leader>rz',
         function() telescope.resume() end,
         { desc = "Resume previous find" })
-      vim.keymap.set('n', '<leader>ob',
+      vim.keymap.set('n', '<leader>rb',
         function() telescope.buffers({ search_dirs = { "." } }) end,
-        { desc = "Open Old Files" })
+        { desc = "Open Old Buffers" })
       vim.keymap.set('n', '<leader>pf', telescope.find_files, { desc = "File Files" })
       vim.keymap.set('n', '<C-p>', telescope.git_files, { desc = "Git Files" })
       vim.keymap.set('n', '<leader>ps',
         function() telescope.grep_string({ search = vim.fn.input("Grep > ") }) end,
         { desc = "Grep Files" })
-      vim.keymap.set('n', '<leadert>vh', telescope.help_tags, { desc = "Help Tags" })
-      vim.keymap.set('n', '<leader>rr',
+      vim.keymap.set('n', '<leader>vh', telescope.help_tags, { desc = "Help Tags" })
+      vim.keymap.set('n', '<leader>rf',
         function()
           cwd = vim.fn.getcwd()
           vim.notify(cwd)
@@ -46,6 +47,17 @@ return {
           vim.notify(p)
           telescope.find_files({ search_dirs = { p } })
         end,
-        { desc = "Browse current file directory" })
+        { desc = "Browse files in current file directory" })
      end,
+  },
+  {
+    "nvim-telescope/telescope-ui-select.nvim",
+    dependencies = { "nvim-telescope/telescope.nvim" },
+    config = function()
+      require("telescope").setup({
+        extensions = { ["ui-select"] = { require("telescope.themes").get_dropdown { }  } }
+      })
+      require("telescope").load_extension("ui-select")
+    end
+  }
 }
