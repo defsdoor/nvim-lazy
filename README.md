@@ -36,3 +36,7 @@ SPACE is Leader
 ### Completion Mappings
 
 
+### VIM Rails
+
+https://github.com/tpope/vim-rails is included with 3 more projections for
+decorators, presenters and js controllers
